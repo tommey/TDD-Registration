@@ -28,8 +28,8 @@ class Factory
 	public function getPasswordValidator()
 	{
 		return new PasswordValidator(
-			$this->configuration->get('validation.user.password.minimum_length'),
-			$this->configuration->get('validation.user.password.maximum_length')
+			$this->configuration->get(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_MINIMUM_LENGTH),
+			$this->configuration->get(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_MAXIMUM_LENGTH)
 		);
 	}
 

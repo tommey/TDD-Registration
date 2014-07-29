@@ -5,6 +5,7 @@ namespace Tdd\Test;
 use Tdd\Configuration;
 use Tdd\Factory;
 use Tdd\EmailValidator;
+use Tdd\Key;
 use Tdd\PasswordValidator;
 use Tdd\UserValidator;
 
@@ -23,8 +24,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
 	public function setPasswordConfiguration()
 	{
-		$this->configuration->set('validation.user.password.minimum_length', 6);
-		$this->configuration->set('validation.user.password.maximum_length', 64);
+		$this->configuration->set(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_MINIMUM_LENGTH, 6);
+		$this->configuration->set(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_MAXIMUM_LENGTH, 64);
 	}
 
 	public function testFactoryCanStoreTheConfiguration()
