@@ -17,6 +17,10 @@ class PasswordGenerator
 
 	public function generate()
 	{
-		return substr(str_shuffle(str_repeat($this->characterSet, 1 + floor($this->maximumLength / strlen($this->characterSet)))), 0, rand($this->minimumLength, $this->maximumLength));
+		return substr(
+			str_shuffle(str_repeat($this->characterSet, 1 + floor($this->maximumLength / strlen($this->characterSet)))),
+			0,
+			rand($this->minimumLength, $this->maximumLength)
+		);
 	}
 }
