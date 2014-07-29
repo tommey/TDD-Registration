@@ -6,7 +6,9 @@
  *     +password: string
  * }
  * class Validator {
- *     +validate($user): bool
+ *     +validateUser($user): bool
+ *     +validateEmail($email): bool
+ *     +validatePassword($password): bool
  * }
  * class Fraud {
  * }
