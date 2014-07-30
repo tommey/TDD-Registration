@@ -22,6 +22,7 @@ class PasswordValidator implements IValidator {
     public function isValid($password)
     {
         $pattern = '/^.{' . $this->minLength . ',' . $this->maxLength . '}$/';
+
         return (bool)preg_match($pattern, $password);
     }
 }
