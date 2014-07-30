@@ -37,4 +37,13 @@ class Factory
 	{
 		return new UserValidator($this->getEmailValidator(), $this->getPasswordValidator());
 	}
+
+	public function getPasswordGenerator()
+	{
+		return new PasswordGenerator(
+			$this->configuration->get(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_MINIMUM_LENGTH),
+			$this->configuration->get(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_MAXIMUM_LENGTH),
+			$this->configuration->get(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_CHARACTER_SET)
+		);
+	}
 }
