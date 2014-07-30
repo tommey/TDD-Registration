@@ -2,8 +2,7 @@
 
 namespace Tdd;
 
-interface IValidator {
-
+interface IValidator
+{
     public function isValid($valueToValidate);
-
-} 
+}
