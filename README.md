@@ -4,5 +4,5 @@ TDD practice - Registration application
 
 ## Documents
 
-* Coverage: [doc/coverage](http://github.com/tommey/TDD-Registration/doc/coverage/index.html)
-* PHPDoc: [doc/phpdoc](http://github.com/tommey/TDD-Registration/doc/phpdoc/index.html)
+* Coverage: [doc/coverage](http://tommey.github.io/TDD-Registration/doc/coverage/index.html)
+* PHPDoc: [doc/phpdoc](http://tommey.github.io/TDD-Registration/doc/phpdoc/index.html)
