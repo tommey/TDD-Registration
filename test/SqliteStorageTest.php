@@ -54,4 +54,13 @@ class SqliteStorageTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(1, $row['id']);
 		$this->assertEquals('test', $row['data']);
 	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 * @expectedExceptionMessage Sqlite configuration needs a non-empty file!
+	 */
+	public function testStorageThrowsExceptionForMissingConfiguration()
+	{
+		new SqliteStorage(array());
+	}
 }
