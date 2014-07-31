@@ -6,10 +6,8 @@ use Tdd\SqliteStorage;
 
 class SqliteStorageTest extends \PHPUnit_Framework_TestCase
 {
-	const CREATE_TABLE_QUERY = 'CREATE TABLE test (id INTEGER PRIMARY KEY, data TEXT NOT NULL)';
-
+	/** @var string */
 	private $databaseFile;
-
 	/** @var SqliteStorage */
 	private $database;
 
@@ -34,14 +32,9 @@ class SqliteStorageTest extends \PHPUnit_Framework_TestCase
 		unlink($this->databaseFile);
 	}
 
-	public function testStorageCanCreateTable()
-	{
-		$this->database->exec(self::CREATE_TABLE_QUERY);
-	}
-
 	public function testStorageCanStoreAndRetrieveData()
 	{
-		$this->database->exec(self::CREATE_TABLE_QUERY);
+		$this->database->exec('CREATE TABLE test (id INTEGER PRIMARY KEY, data TEXT NOT NULL)');
 
 		$this->database->query("INSERT INTO test (data) VALUES ('test')");
 
