@@ -2,6 +2,9 @@
 
 namespace Tdd;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Key
 {
 	const CONFIGURATION_VALIDATOR_USER_PASSWORD_MINIMUM_LENGTH = 'validator.user.password.minimum_length';
