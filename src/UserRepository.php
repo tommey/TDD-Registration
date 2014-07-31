@@ -24,7 +24,7 @@ class UserRepository
 		$stmt = $this->persistentStorage->prepare('SELECT * FROM user WHERE email = ? LIMIT 1');
 		if (!$stmt->execute(array($email)))
 		{
-			return null;
+			return null; // @codeCoverageIgnore
 		}
 
 		$row = $stmt->fetch();
@@ -41,7 +41,7 @@ class UserRepository
 		$stmt = $this->persistentStorage->prepare('SELECT * FROM user WHERE email = ? AND password = ? LIMIT 1');
 		if (!$stmt->execute(array($email, $password)))
 		{
-			return null;
+			return null; // @codeCoverageIgnore
 		}
 
 		$row = $stmt->fetch();
