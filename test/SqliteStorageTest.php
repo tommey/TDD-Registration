@@ -6,6 +6,8 @@ use Tdd\SqliteStorage;
 
 class SqliteStorageTest extends \PHPUnit_Framework_TestCase
 {
+	const CREATE_TABLE_QUERY = 'CREATE TABLE test (id INTEGER PRIMARY KEY, data TEXT NOT NULL)';
+
 	private $databaseFile;
 
 	/** @var SqliteStorage */
@@ -20,7 +22,7 @@ class SqliteStorageTest extends \PHPUnit_Framework_TestCase
 	{
 		if (file_exists($this->databaseFile))
 		{
-			throw new \ErrorException('Database file (' . $this->databaseFile . ') exists before the test.. it should be there!');
+			throw new \ErrorException('Database file (' . $this->databaseFile . ') exists before the test.. it should not be there!');
 		}
 
 		$this->database = new SqliteStorage(array('file' => $this->databaseFile));
@@ -34,14 +36,14 @@ class SqliteStorageTest extends \PHPUnit_Framework_TestCase
 
 	public function testStorageCanCreateTable()
 	{
-		$this->database->exec('CREATE TABLE test (id INTEGER PRIMARY KEY, data TEXT NOT NULL)');
+		$this->database->exec(self::CREATE_TABLE_QUERY);
 	}
 
 	public function testStorageCanStoreAndRetrieveData()
 	{
-		$this->database->exec('CREATE TABLE test (id INTEGER PRIMARY KEY, data TEXT NOT NULL)');
+		$this->database->exec(self::CREATE_TABLE_QUERY);
 
-		$this->database->query('INSERT INTO test (data) VALUES (\'test\')');
+		$this->database->query("INSERT INTO test (data) VALUES ('test')");
 
 		$rows = $this->database->query('SELECT id, data FROM test')->fetchAll();
 
@@ -49,7 +51,7 @@ class SqliteStorageTest extends \PHPUnit_Framework_TestCase
 
 		$row = $rows[0];
 
-		$this->assertEquals(1, $row[0]);
-		$this->assertEquals('test', $row[1]);
+		$this->assertEquals(1, $row['id']);
+		$this->assertEquals('test', $row['data']);
 	}
 }
