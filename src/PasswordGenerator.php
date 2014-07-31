@@ -12,7 +12,7 @@ class PasswordGenerator
 	{
 		$this->minimumLength = $minimumLength;
 		$this->maximumLength = $maximumLength;
-		$this->characterSet = $characterSet;
+		$this->characterSet  = $characterSet;
 	}
 
 	public function generate()

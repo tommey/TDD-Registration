@@ -11,7 +11,7 @@ class UserValidator implements IValidator
 	/** @var UserTypeValidator */
 	private $userTypeValidator;
 
-	public function __construct($emailValidator, $passwordValidator, $userTypeValidator)
+	public function __construct(EmailValidator $emailValidator, PasswordValidator $passwordValidator, UserTypeValidator $userTypeValidator)
 	{
 		$this->emailValidator    = $emailValidator;
 		$this->passwordValidator = $passwordValidator;

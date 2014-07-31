@@ -13,8 +13,12 @@ class RegistrationModule
 	/** @var PasswordGenerator */
 	private $passwordGenerator;
 
-	public function __construct($userRepository, $userValidator, $passwordHasher, $passwordGenerator)
-	{
+	public function __construct(
+		UserRepository $userRepository,
+		UserValidator $userValidator,
+		PasswordHasher $passwordHasher,
+		PasswordGenerator $passwordGenerator
+	) {
 		$this->userRepository    = $userRepository;
 		$this->userValidator     = $userValidator;
 		$this->passwordHasher    = $passwordHasher;

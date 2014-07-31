@@ -7,7 +7,7 @@ class Application
 	/** @var Factory */
 	private $factory;
 
-	public function __construct($factory)
+	public function __construct(Factory $factory)
 	{
 		$this->factory = $factory;
 	}

@@ -4,6 +4,7 @@ namespace Tdd;
 
 class SqliteStorage extends PersistentStorage
 {
+	/** @var string */
 	private $databaseFile;
 
 	public function __construct(array $configuration)

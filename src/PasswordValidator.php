@@ -1,19 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: frnc
- * Date: 2014.07.29.
- * Time: 18:04
- */
 
 namespace Tdd;
 
 class PasswordValidator implements IValidator {
 
-    private $maxLength;
-    private $minLength;
+	private $minLength;
+	private $maxLength;
 
-    function __construct($minLength, $maxLength)
+    public function __construct($minLength, $maxLength)
     {
         $this->minLength = $minLength;
         $this->maxLength = $maxLength;
@@ -21,8 +15,8 @@ class PasswordValidator implements IValidator {
 
     public function isValid($password)
     {
-        $pattern = '/^.{' . $this->minLength . ',' . $this->maxLength . '}$/';
+        $length = strlen($password);
 
-        return (bool)preg_match($pattern, $password);
+        return $this->minLength <= $length && $length <= $this->maxLength;
     }
 }
