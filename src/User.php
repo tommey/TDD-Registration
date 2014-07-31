@@ -6,8 +6,9 @@ class User
 {
 	private $email;
 	private $password;
+	private $type;
 
-	public function __construct($email, $password)
+	public function __construct($email, $password, $type)
 	{
 		if (!is_string($email) || empty($email))
 		{
@@ -17,9 +18,14 @@ class User
 		{
 			throw new \InvalidArgumentException('Invalid password!');
 		}
+		if (!is_string($type) || empty($type))
+		{
+			throw new \InvalidArgumentException('Invalid type!');
+		}
 
-		$this->email = (string)$email;
-		$this->password = (string)$password;
+		$this->email    = $email;
+		$this->password = $password;
+		$this->type     = $type;
 	}
 
 	/**
@@ -36,5 +42,13 @@ class User
 	public function getPassword()
 	{
 		return $this->password;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getType()
+	{
+		return $this->type;
 	}
 }
