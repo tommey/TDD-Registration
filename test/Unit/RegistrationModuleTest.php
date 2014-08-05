@@ -1,6 +1,6 @@
 <?php
 
-namespace Tdd\Test;
+namespace Tdd\Test\Unit;
 
 use Tdd\RegistrationModule;
 use Tdd\UserRepository;

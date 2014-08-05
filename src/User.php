@@ -18,15 +18,17 @@ class User
 	 */
 	public function __construct($email, $password, $type)
 	{
-		if (!is_string($email) || empty($email))
+		$validator = new NonEmptyStringArgumentValidator();
+
+		if (!$validator->isValid($email))
 		{
 			throw new \InvalidArgumentException('Invalid email!');
 		}
-		if (!is_string($password) || empty($password))
+		if (!$validator->isValid($password))
 		{
 			throw new \InvalidArgumentException('Invalid password!');
 		}
-		if (!is_string($type) || empty($type))
+		if (!$validator->isValid($type))
 		{
 			throw new \InvalidArgumentException('Invalid type!');
 		}

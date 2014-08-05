@@ -4,7 +4,15 @@ namespace Tdd;
 
 class Configuration
 {
+	/** @var array */
 	private $data = array();
+	/** @var IValidator */
+	private $keyValidator;
+
+	public function __construct()
+	{
+		$this->keyValidator = new NonEmptyStringArgumentValidator();
+	}
 
 	/**
 	 * @param string $key
@@ -12,7 +20,7 @@ class Configuration
 	 */
 	public function set($key, $value)
 	{
-		if (!is_string($key) || empty($key))
+		if (!$this->keyValidator->isValid($key))
 		{
 			throw new \InvalidArgumentException('Key must be a non-empty string!');
 		}
