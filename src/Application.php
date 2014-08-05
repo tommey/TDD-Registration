@@ -14,61 +14,58 @@ class Application
 
 	public function run($route)
 	{
-		switch ($route)
+		$routing = array(
+			'/' => function() { $this->index(); },
+			'/user/register/local' => function() { $this->registerLocalUser(); },
+			'/user/register/facebook' => function() { $this->registerExternalUser('facebook'); },
+			'/user/register/google' => function() { $this->registerExternalUser('google'); }
+		);
+
+		if (isset($routing[$route]))
 		{
-			case '/':
-				echo 'Index page';
-				break;
+			$routing[$route]();
+		}
+		else
+		{
+			echo 'Page not found!';
+		}
+	}
 
-			case '/user/register/local':
-				$registrationModule = $this->factory->getRegistrationModule();
+	private function index()
+	{
+		echo 'Index page';
+	}
 
-				$email    = isset($_POST['email']) ? $_POST['email'] : '';
-				$password = isset($_POST['password']) ? $_POST['password'] : '';
+	private function registerLocalUser()
+	{
+		$registrationModule = $this->factory->getRegistrationModule();
 
-				if ($registrationModule->registerLocalUser($email, $password))
-				{
-					echo 'Registered local user successfully!';
-				}
-				else
-				{
-					echo 'Registration of local user failed!';
-				}
-				break;
+		$email    = isset($_POST['email']) ? $_POST['email'] : '';
+		$password = isset($_POST['password']) ? $_POST['password'] : '';
 
-			case '/user/register/facebook':
-				$registrationModule = $this->factory->getRegistrationModule();
+		if ($registrationModule->registerLocalUser($email, $password))
+		{
+			echo 'Registered local user successfully!';
+		}
+		else
+		{
+			echo 'Registration of local user failed!';
+		}
+	}
 
-				$email    = isset($_POST['email']) ? $_POST['email'] : '';
+	private function registerExternalUser($type)
+	{
+		$registrationModule = $this->factory->getRegistrationModule();
 
-				if ($registrationModule->registerExternalUser($email, 'facebook'))
-				{
-					echo 'Registered facebook user successfully!';
-				}
-				else
-				{
-					echo 'Registration of facebook user failed!';
-				}
-				break;
+		$email    = isset($_POST['email']) ? $_POST['email'] : '';
 
-			case '/user/register/google':
-				$registrationModule = $this->factory->getRegistrationModule();
-
-				$email    = isset($_POST['email']) ? $_POST['email'] : '';
-
-				if ($registrationModule->registerExternalUser($email, 'google'))
-				{
-					echo 'Registered google user successfully!';
-				}
-				else
-				{
-					echo 'Registration of google user failed!';
-				}
-				break;
-
-			default:
-				echo 'Page not found!';
-				break;
+		if ($registrationModule->registerExternalUser($email, $type))
+		{
+			echo 'Registered ' . $type . ' user successfully!';
+		}
+		else
+		{
+			echo 'Registration of ' . $type . ' user failed!';
 		}
 	}
 }
