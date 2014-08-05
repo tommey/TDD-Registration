@@ -4,5 +4,8 @@
 			"Tdd\\Test\\": "test/",
 			"Tdd\\": "src/"
 		}
+	},
+	"require-dev": {
+		"codeclimate/php-test-reporter": "dev-master"
 	}
 }
