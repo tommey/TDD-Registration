@@ -11,6 +11,11 @@ class UserValidator implements IValidator
 	/** @var UserTypeValidator */
 	private $userTypeValidator;
 
+	/**
+	 * @param EmailValidator    $emailValidator
+	 * @param PasswordValidator $passwordValidator
+	 * @param UserTypeValidator $userTypeValidator
+	 */
 	public function __construct(EmailValidator $emailValidator, PasswordValidator $passwordValidator, UserTypeValidator $userTypeValidator)
 	{
 		$this->emailValidator    = $emailValidator;
@@ -18,6 +23,11 @@ class UserValidator implements IValidator
 		$this->userTypeValidator = $userTypeValidator;
 	}
 
+	/**
+	 * @param User $user
+	 *
+	 * @return bool
+	 */
 	public function isValid($user)
 	{
 		if (!($user instanceof User))

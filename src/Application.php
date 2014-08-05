@@ -7,11 +7,17 @@ class Application
 	/** @var Factory */
 	private $factory;
 
+	/**
+	 * @param Factory $factory
+	 */
 	public function __construct(Factory $factory)
 	{
 		$this->factory = $factory;
 	}
 
+	/**
+	 * @param string $route
+	 */
 	public function run($route)
 	{
 		$routing = array(
@@ -53,6 +59,9 @@ class Application
 		}
 	}
 
+	/**
+	 * @param string $type
+	 */
 	private function registerExternalUser($type)
 	{
 		$registrationModule = $this->factory->getRegistrationModule();

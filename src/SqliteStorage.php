@@ -7,6 +7,9 @@ class SqliteStorage extends PersistentStorage
 	/** @var string */
 	private $databaseFile;
 
+	/**
+	 * @param array $configuration
+	 */
 	public function __construct(array $configuration)
 	{
 		if (empty($configuration['file']))

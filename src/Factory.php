@@ -7,6 +7,9 @@ class Factory
 	/** @var Configuration */
 	private $configuration;
 
+	/**
+	 * @param Configuration $configuration
+	 */
 	public function __construct(Configuration $configuration)
 	{
 		$this->configuration = $configuration;
@@ -20,11 +23,17 @@ class Factory
 		return $this->configuration;
 	}
 
+	/**
+	 * @return EmailValidator
+	 */
 	public function getEmailValidator()
 	{
 		return new EmailValidator;
 	}
 
+	/**
+	 * @return PasswordValidator
+	 */
 	public function getPasswordValidator()
 	{
 		return new PasswordValidator(
@@ -33,11 +42,17 @@ class Factory
 		);
 	}
 
+	/**
+	 * @return UserTypeValidator
+	 */
 	public function getUserTypeValidator()
 	{
 		return new UserTypeValidator();
 	}
 
+	/**
+	 * @return UserValidator
+	 */
 	public function getUserValidator()
 	{
 		return new UserValidator(
@@ -47,6 +62,9 @@ class Factory
 		);
 	}
 
+	/**
+	 * @return PasswordGenerator
+	 */
 	public function getPasswordGenerator()
 	{
 		return new PasswordGenerator(
@@ -56,21 +74,33 @@ class Factory
 		);
 	}
 
+	/**
+	 * @return PasswordHasher
+	 */
 	public function getPasswordHasher()
 	{
 		return new PasswordHasher();
 	}
 
+	/**
+	 * @return SqliteStorage
+	 */
 	public function getUserPersistentStorage()
 	{
 		return new SqliteStorage($this->configuration->get(Key::CONFIGURATION_STORAGE_USER_DATABASE_CONFIGURATION));
 	}
 
+	/**
+	 * @return UserRepository
+	 */
 	public function getUserRepository()
 	{
 		return new UserRepository($this->getUserPersistentStorage());
 	}
 
+	/**
+	 * @return RegistrationModule
+	 */
 	public function getRegistrationModule()
 	{
 		return new RegistrationModule(

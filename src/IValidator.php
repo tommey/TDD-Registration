@@ -7,5 +7,10 @@ namespace Tdd;
  */
 interface IValidator
 {
-    public function isValid($valueToValidate);
+	/**
+	 * @param mixed $valueToValidate
+	 *
+	 * @return bool
+	 */
+	public function isValid($valueToValidate);
 }

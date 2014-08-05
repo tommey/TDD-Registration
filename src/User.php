@@ -4,10 +4,18 @@ namespace Tdd;
 
 class User
 {
+	/** @var string */
 	private $email;
+	/** @var string */
 	private $password;
+	/** @var string */
 	private $type;
 
+	/**
+	 * @param string $email
+	 * @param string $password
+	 * @param string $type
+	 */
 	public function __construct($email, $password, $type)
 	{
 		if (!is_string($email) || empty($email))

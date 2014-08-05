@@ -8,6 +8,11 @@ class PasswordGenerator
 	private $maximumLength;
 	private $characterSet;
 
+	/**
+	 * @param int    $minimumLength
+	 * @param int    $maximumLength
+	 * @param string $characterSet
+	 */
 	public function __construct($minimumLength, $maximumLength, $characterSet)
 	{
 		$this->minimumLength = $minimumLength;
@@ -15,6 +20,9 @@ class PasswordGenerator
 		$this->characterSet  = $characterSet;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function generate()
 	{
 		return substr(
