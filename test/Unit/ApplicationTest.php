@@ -35,95 +35,60 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 		$this->application->run('/not-found');
 	}
 
-	public function testApplicationCanRegisterValidLocalUser()
-	{
-		$registrationModule = $this->getMock('\\Tdd\\RegistrationModule', array(), array(), '', false);
-
-		$_POST['email']    = uniqid('u', true) . '@local.com';
-		$_POST['password'] = 'password';
-		$registrationModule->expects($this->once())->method('registerLocalUser')->with($_POST['email'], $_POST['password'])->willReturn(true);
-
-		$this->factory->expects($this->once())->method('getRegistrationModule')->willReturn($registrationModule);
-
-		$this->expectOutputString('Registered local user successfully!');
-
-		$this->application->run('/user/register/local');
-	}
-
-	public function testApplicationCanNotRegisterInvalidLocalUser()
-	{
-		$registrationModule = $this->getMock('\\Tdd\\RegistrationModule', array(), array(), '', false);
-
-		$_POST['email']    = uniqid('u', true) . '@local.com';
-		$_POST['password'] = 'password';
-		$registrationModule->expects($this->once())->method('registerLocalUser')->with($_POST['email'], $_POST['password'])->willReturn(false);
-
-		$this->factory->expects($this->once())->method('getRegistrationModule')->willReturn($registrationModule);
-
-		$this->expectOutputString('Registration of local user failed!');
-
-		$this->application->run('/user/register/local');
-	}
-
-	public function externalUserTypeProvider()
+	public function userTypeProvider()
 	{
 		return array(
-			array('google'),
-			array('facebook'),
+			array('local', true),
+			array('local', false),
+			array('google', true),
+			array('google', false),
+			array('facebook', true),
+			array('facebook', false),
 		);
 	}
 
 	/**
-	 * @dataProvider externalUserTypeProvider
+	 * @dataProvider userTypeProvider
 	 *
-	 * @param string $externalUserType
+	 * @param string $userType
+	 * @param bool   $isValidUser
 	 */
-	public function testApplicationCanRegisterValidExternalUser($externalUserType)
+	public function testApplicationRegistrationOfUser($userType, $isValidUser)
 	{
 		$registrationModule = $this->getMockBuilder('\\Tdd\\RegistrationModule')->disableOriginalConstructor()->getMock();
 
-		$_POST['email'] = uniqid('u', true) . '@' . $externalUserType . '.com';
+		$_POST['email'] = uniqid('u', true) . '@' . $userType . '.com';
 
-		$registrationModule
-			->expects($this->once())
-			->method('registerExternalUser')
-			->with($_POST['email'], $externalUserType)
-			->willReturn(true);
+		if ($userType == 'local')
+		{
+			$_POST['password'] = 'password';
+
+			$registrationModule
+				->expects($this->once())
+				->method('registerLocalUser')
+				->with($_POST['email'], $_POST['password'])
+				->willReturn($isValidUser);
+		}
+		else
+		{
+			$registrationModule
+				->expects($this->once())
+				->method('registerExternalUser')
+				->with($_POST['email'], $userType)
+				->willReturn($isValidUser);
+		}
 
 		$this->factory
 			->expects($this->once())
 			->method('getRegistrationModule')
 			->willReturn($registrationModule);
 
-		$this->expectOutputString('Registered ' . $externalUserType . ' user successfully!');
+		$this->expectOutputString(
+			$isValidUser
+			? 'Registered ' . $userType . ' user successfully!'
+			: 'Registration of ' . $userType . ' user failed!'
+		);
 
-		$this->application->run('/user/register/' . $externalUserType);
-	}
-
-	/**
-	 * @dataProvider externalUserTypeProvider
-	 *
-	 * @param string $externalUserType
-	 */
-	public function testApplicationCanNotRegisterInvalidExternalUser($externalUserType)
-	{
-		$registrationModule = $this->getMockBuilder('\\Tdd\\RegistrationModule')->disableOriginalConstructor()->getMock();
-
-		$_POST['email'] = uniqid('u', true) . '@' . $externalUserType . '.com';
-
-		$registrationModule
-			->expects($this->once())
-			->method('registerExternalUser')
-			->with($_POST['email'], $externalUserType)
-			->willReturn(false);
-
-		$this->factory
-			->expects($this->once())
-			->method('getRegistrationModule')
-			->willReturn($registrationModule);
-
-		$this->expectOutputString('Registration of ' . $externalUserType . ' user failed!');
-
-		$this->application->run('/user/register/' . $externalUserType);
+		$this->application->run('/user/register/' . $userType);
 	}
 }
