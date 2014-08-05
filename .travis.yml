@@ -13,3 +13,4 @@ script:
   - phpunit --configuration phpunit.xml
 after_script:
   - ./bin/code-climate-test-reporter.sh
+  - php bin/ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
