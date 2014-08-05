@@ -19,8 +19,9 @@ class PasswordGeneratorTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider intervalDataProvider
 	 *
-	 * @param $minimumLength
-	 * @param $maximumLength
+	 * @param int    $minimumLength
+	 * @param int    $maximumLength
+	 * @param string $characterSet
 	 */
 	public function testPasswordGeneratorCanGenerateValidPassword($minimumLength, $maximumLength, $characterSet)
 	{

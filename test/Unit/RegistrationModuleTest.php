@@ -45,6 +45,7 @@ class RegistrationModuleTest extends \PHPUnit_Framework_TestCase
 
 	public function getInvalidRegistrationModule()
 	{
+		/** @var UserValidator|\PHPUnit_Framework_MockObject_MockObject $userValidator */
 		$userValidator = $this->getMockBuilder('\\Tdd\\UserValidator')->disableOriginalConstructor()->getMock();
 		$userValidator->expects($this->any())->method('isValid')->willReturn(false);
 

@@ -59,8 +59,8 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider externalUserInputDataProvider
 	 *
-	 * @param $email
-	 * @param $type
+	 * @param string $email
+	 * @param string $type
 	 */
 	public function testExternalUserCanBeRegistered($email, $type)
 	{

@@ -1,4 +1,5 @@
 <phpunit
+        xmlns="http://schema.phpunit.de/4.1/phpunit.xsd"
         bootstrap="vendor/autoload.php"
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"

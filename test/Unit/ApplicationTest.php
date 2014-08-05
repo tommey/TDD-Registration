@@ -76,7 +76,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider externalUserTypeProvider
 	 *
-	 * @param $externalUserType
+	 * @param string $externalUserType
 	 */
 	public function testApplicationCanRegisterValidExternalUser($externalUserType)
 	{
@@ -103,7 +103,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider externalUserTypeProvider
 	 *
-	 * @param $externalUserType
+	 * @param string $externalUserType
 	 */
 	public function testApplicationCanNotRegisterInvalidExternalUser($externalUserType)
 	{
