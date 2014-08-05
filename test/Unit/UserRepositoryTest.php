@@ -28,7 +28,7 @@ class UserRepositoryTest extends \PHPUnit_Framework_TestCase
 
 		$this->database = new SqliteStorage(array('file' => $this->databaseFile));
 
-		$this->database->exec(file_get_contents(__DIR__ . '/../resource/user.db.sql'));
+		$this->database->exec(file_get_contents(__DIR__ . '/../../resource/user.db.sql'));
 
 		$this->userRepository = new UserRepository($this->database);
 	}
