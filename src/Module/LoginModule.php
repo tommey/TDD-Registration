@@ -35,7 +35,7 @@ class LoginModule
 	 * @param string $email
 	 * @param string $password
 	 *
-	 * @return bool
+	 * @return null|User
 	 */
 	public function loginUser($email, $password)
 	{
