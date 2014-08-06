@@ -6,6 +6,7 @@ use Tdd\Common\Configuration;
 use Tdd\Common\Factory;
 use Tdd\Common\Key;
 use Tdd\Database\SqliteStorage;
+use Tdd\Module\LoginModule;
 use Tdd\Module\CaptchaModule;
 use Tdd\Module\RegistrationModule;
 use Tdd\Repository\UserRepository;
@@ -55,6 +56,11 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 	public function testFactoryCanGetEmailValidator()
 	{
 		$this->assertTrue($this->factory->getEmailValidator() instanceof EmailValidator);
+	}
+
+	public function testFactoryCanGetLoginModule()
+	{
+		$this->assertTrue($this->factory->getLoginModule() instanceof LoginModule);
 	}
 
 	public function testFactoryCanGetPasswordGenerator()

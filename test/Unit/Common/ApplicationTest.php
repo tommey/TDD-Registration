@@ -4,6 +4,7 @@ namespace Tdd\Test\Unit\Common;
 
 use Tdd\Common\Application;
 use Tdd\Common\Factory;
+use Tdd\Entity\User;
 
 class ApplicationTest extends \PHPUnit_Framework_TestCase
 {
@@ -90,5 +91,38 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 		);
 
 		$this->application->run('/user/register/' . $userType);
+	}
+
+	/**
+	 * @dataProvider userTypeProvider
+	 *
+	 * @param string $userType
+	 * @param bool   $isValidUser
+	 */
+	public function testApplicationLoginOfUser($userType, $isValidUser)
+	{
+		$loginModule = $this->getMockBuilder('\\Tdd\\Module\\LoginModule')->disableOriginalConstructor()->getMock();
+
+		$_POST['email']    = uniqid('u', true) . '@' . $userType . '.com';
+		$_POST['password'] = 'password';
+
+		$loginModule
+			->expects($this->once())
+			->method('loginUser')
+			->with($_POST['email'], $_POST['password'])
+			->willReturn($isValidUser ? new User($_POST['email'], $_POST['password'], 'local') : null);
+
+		$this->factory
+			->expects($this->once())
+			->method('getLoginModule')
+			->willReturn($loginModule);
+
+		$this->expectOutputString(
+			$isValidUser
+				? 'Logged in!'
+				: 'Login failed!'
+		);
+
+		$this->application->run('/user/login');
 	}
 }

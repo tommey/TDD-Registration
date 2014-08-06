@@ -3,6 +3,7 @@
 namespace Tdd\Common;
 
 use Tdd\Database\SqliteStorage;
+use Tdd\Module\LoginModule;
 use Tdd\Module\RegistrationModule;
 use Tdd\Module\CaptchaModule;
 use Tdd\Repository\UserRepository;
@@ -119,6 +120,18 @@ class Factory
 			$this->getUserValidator(),
 			$this->getPasswordHasher(),
 			$this->getPasswordGenerator()
+		);
+	}
+
+	/**
+	 * @return LoginModule
+	 */
+	public function getLoginModule()
+	{
+		return new LoginModule(
+			$this->getUserRepository(),
+			$this->getUserValidator(),
+			$this->getPasswordHasher()
 		);
 	}
 

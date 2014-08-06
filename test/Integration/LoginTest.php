@@ -6,8 +6,9 @@ use Tdd\Common\Application;
 use Tdd\Common\Configuration;
 use Tdd\Common\Key;
 use Tdd\Common\Factory;
+use Tdd\Entity\User;
 
-class RegistrationTest extends \PHPUnit_Framework_TestCase
+class LoginTest extends \PHPUnit_Framework_TestCase
 {
 	/** @var string Temporary database file (copy of the real one) to use for testing. */
 	private $databaseFile;
@@ -54,6 +55,16 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
 
 		$this->factory     = new Factory($this->configuration);
 		$this->application = new Application($this->factory);
+
+		$passwordHasher = $this->factory->getPasswordHasher();
+		$userRepository = $this->factory->getUserRepository();
+		foreach ($this->externalUserInputDataProvider() as $user)
+		{
+			if (false === $userRepository->save(new User($user[0], $passwordHasher->hash($user[1]), $user[2])))
+			{
+				throw new \LogicException('Could not setup database for login integration test!');
+			}
+		}
 	}
 
 	public function tearDown()
@@ -62,34 +73,31 @@ class RegistrationTest extends \PHPUnit_Framework_TestCase
 		unlink($this->databaseFile);
 	}
 
-	public function userInputDataProvider()
+	/**
+	 * @return array
+	 */
+	public function externalUserInputDataProvider()
 	{
 		return array(
-			array('user@local.com', 'local'),
-			array('user@google.com', 'google'),
-			array('user@facebook.com', 'facebook')
+			array('user@local.com', 'passwordLocal', 'local'),
+			array('user@google.com', 'passwordGoogle', 'google'),
+			array('user@facebook.com', 'passwordFacebook', 'facebook')
 		);
 	}
 
 	/**
-	 * @dataProvider userInputDataProvider
+	 * @dataProvider externalUserInputDataProvider
 	 *
 	 * @param string $email
-	 * @param string $type
+	 * @param string $password
 	 */
-	public function testEveryUserTypeCanBeRegistered($email, $type)
+	public function testEveryUserTypeCanLogin($email, $password)
 	{
-		$_POST['email'] = $email;
+		$_POST['email']    = $email;
+		$_POST['password'] = $password;
 
-		if ($type == 'local')
-		{
-			$_POST['password'] = 'password';
-		}
+		$this->expectOutputString('Logged in!');
 
-		$this->expectOutputString('Registered ' . $type . ' user successfully!');
-
-		$this->application->run('/user/register/' . $type);
-
-		$this->assertNotNull($this->factory->getUserRepository()->getByEmail($_POST['email']));
+		$this->application->run('/user/login');
 	}
 }

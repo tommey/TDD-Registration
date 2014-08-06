@@ -2,6 +2,8 @@
 
 namespace Tdd\Common;
 
+use Tdd\Entity\User;
+
 class Application
 {
 	/** @var Factory */
@@ -24,7 +26,8 @@ class Application
 			'/' => function() { $this->index(); },
 			'/user/register/local' => function() { $this->registerLocalUser(); },
 			'/user/register/facebook' => function() { $this->registerExternalUser('facebook'); },
-			'/user/register/google' => function() { $this->registerExternalUser('google'); }
+			'/user/register/google' => function() { $this->registerExternalUser('google'); },
+			'/user/login' => function() { $this->loginUser(); }
 		);
 
 		if (isset($routing[$route]))
@@ -66,7 +69,7 @@ class Application
 	{
 		$registrationModule = $this->factory->getRegistrationModule();
 
-		$email    = isset($_POST['email']) ? $_POST['email'] : '';
+		$email = isset($_POST['email']) ? $_POST['email'] : '';
 
 		if ($registrationModule->registerExternalUser($email, $type))
 		{
@@ -75,6 +78,25 @@ class Application
 		else
 		{
 			echo 'Registration of ' . $type . ' user failed!';
+		}
+	}
+
+	private function loginUser()
+	{
+		$loginModule = $this->factory->getLoginModule();
+
+		$email    = isset($_POST['email']) ? $_POST['email'] : '';
+		$password = isset($_POST['password']) ? $_POST['password'] : '';
+
+		$user = $loginModule->loginUser($email, $password);
+
+		if ($user instanceof User)
+		{
+			echo 'Logged in!';
+		}
+		else
+		{
+			echo 'Login failed!';
 		}
 	}
 }
