@@ -4,6 +4,7 @@ namespace Tdd\Common;
 
 use Tdd\Database\SqliteStorage;
 use Tdd\Module\RegistrationModule;
+use Tdd\Module\CaptchaModule;
 use Tdd\Repository\UserRepository;
 use Tdd\Utility\PasswordGenerator;
 use Tdd\Utility\PasswordHasher;
@@ -120,4 +121,12 @@ class Factory
 			$this->getPasswordGenerator()
 		);
 	}
+
+    /**
+     * @return CaptchaModule
+     */
+    public function getCaptchaModule()
+    {
+        return new CaptchaModule();
+    }
 }
