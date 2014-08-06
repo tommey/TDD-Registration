@@ -21,7 +21,7 @@
         <whitelist>
             <directory>src</directory>
             <exclude>
-                <file>src/index.php</file>
+                <file>src/web/index.php</file>
                 <directory>bin</directory>
                 <directory>build</directory>
                 <directory>doc</directory>
