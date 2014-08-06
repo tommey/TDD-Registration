@@ -23,48 +23,13 @@ class LoginTest extends \PHPUnit_Framework_TestCase
 	{
 		$_GET = $_POST = array();
 
-		// Copy real, empty database file.
-		$realDatabaseFile = __DIR__ . '/../../resource/user.db';
-		$testDatabaseFile = $realDatabaseFile . '-test';
-
-		if (!file_exists($realDatabaseFile))
-		{
-			throw new \LogicException('Real database file not found for test!');
-		}
-
-		if (file_exists($testDatabaseFile))
-		{
-			throw new \LogicException('Test database file found for test, but it should not be there...');
-		}
-
-		if (!copy($realDatabaseFile, $testDatabaseFile))
-		{
-			throw new \LogicException('Could not copy real database file to test!');
-		}
-
-		$this->databaseFile = $testDatabaseFile;
-
-
-		// Setup application.
-		$this->configuration = new Configuration();
-
-		$this->configuration->set(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_MINIMUM_LENGTH, 6);
-		$this->configuration->set(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_MAXIMUM_LENGTH, 64);
-		$this->configuration->set(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_CHARACTER_SET, 'qwertzuiopasdfghjklyxcvbnm');
-		$this->configuration->set(Key::CONFIGURATION_STORAGE_USER_DATABASE_CONFIGURATION, array('file' => $testDatabaseFile));
+		$this->setUpDatabase();
+		$this->setUpConfiguration();
 
 		$this->factory     = new Factory($this->configuration);
 		$this->application = new Application($this->factory);
 
-		$passwordHasher = $this->factory->getPasswordHasher();
-		$userRepository = $this->factory->getUserRepository();
-		foreach ($this->externalUserInputDataProvider() as $user)
-		{
-			if (false === $userRepository->save(new User($user[0], $passwordHasher->hash($user[1]), $user[2])))
-			{
-				throw new \LogicException('Could not setup database for login integration test!');
-			}
-		}
+		$this->setUpRegisteredUsersInDatabase();
 	}
 
 	public function tearDown()
@@ -99,5 +64,49 @@ class LoginTest extends \PHPUnit_Framework_TestCase
 		$this->expectOutputString('Logged in!');
 
 		$this->application->run('/user/login');
+	}
+
+	private function setUpDatabase()
+	{
+		// Copy real, empty database file.
+		$realDatabaseFile = __DIR__ . '/../../resource/user.db';
+		$testDatabaseFile = $realDatabaseFile . '-test';
+
+		if (!file_exists($realDatabaseFile)) {
+			throw new \LogicException('Real database file not found for test!');
+		}
+
+		if (file_exists($testDatabaseFile)) {
+			throw new \LogicException('Test database file found for test, but it should not be there...');
+		}
+
+		if (!copy($realDatabaseFile, $testDatabaseFile)) {
+			throw new \LogicException('Could not copy real database file to test!');
+		}
+
+		$this->databaseFile = $testDatabaseFile;
+	}
+
+	private function setUpConfiguration()
+	{
+		$this->configuration = new Configuration();
+
+		$this->configuration->set(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_MINIMUM_LENGTH, 6);
+		$this->configuration->set(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_MAXIMUM_LENGTH, 64);
+		$this->configuration->set(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_CHARACTER_SET, 'qwertzuiopasdfghjklyxcvbnm');
+		$this->configuration->set(Key::CONFIGURATION_STORAGE_USER_DATABASE_CONFIGURATION, array('file' => $this->databaseFile));
+	}
+
+	private function setUpRegisteredUsersInDatabase()
+	{
+		$passwordHasher = $this->factory->getPasswordHasher();
+		$userRepository = $this->factory->getUserRepository();
+		foreach ($this->externalUserInputDataProvider() as $user)
+		{
+			if (false === $userRepository->save(new User($user[0], $passwordHasher->hash($user[1]), $user[2])))
+			{
+				throw new \LogicException('Could not setup database for login integration test!');
+			}
+		}
 	}
 }
