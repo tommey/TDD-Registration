@@ -2,10 +2,10 @@
 
 namespace Tdd\Test\Integration;
 
-use Tdd\Application;
-use Tdd\Configuration;
-use Tdd\Key;
-use Tdd\Factory;
+use Tdd\Common\Application;
+use Tdd\Common\Configuration;
+use Tdd\Common\Key;
+use Tdd\Common\Factory;
 
 class RegistrationTest extends \PHPUnit_Framework_TestCase
 {
