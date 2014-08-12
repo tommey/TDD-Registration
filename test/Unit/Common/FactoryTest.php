@@ -2,6 +2,7 @@
 
 namespace Tdd\Test\Unit\Common;
 
+use Tdd\Cache\MemcacheCacheStorage;
 use Tdd\Common\Configuration;
 use Tdd\Common\Factory;
 use Tdd\Common\Key;
@@ -58,9 +59,24 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue($this->factory->getEmailValidator() instanceof EmailValidator);
 	}
 
+	public function testFactoryCanGetFraudModule()
+	{
+		$this->assertTrue($this->factory->getFraudModule() instanceof FraudModule);
+	}
+
 	public function testFactoryCanGetLoginModule()
 	{
 		$this->assertTrue($this->factory->getLoginModule() instanceof LoginModule);
+	}
+
+	public function testFactoryCanGetLocalMemcache()
+	{
+		$this->assertTrue($this->factory->getLocalMemcache() instanceof \Memcache);
+	}
+
+	public function testFactoryCanGetMemcacheCacheStorage()
+	{
+		$this->assertTrue($this->factory->getMemcacheCacheStorage() instanceof MemcacheCacheStorage);
 	}
 
 	public function testFactoryCanGetPasswordGenerator()
@@ -102,9 +118,4 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->assertTrue($this->factory->getUserValidator() instanceof UserValidator);
 	}
-
-    public function testFactoryCanGetFraudModule()
-    {
-        $this->assertTrue($this->factory->getFraudModule() instanceof FraudModule);
-    }
 }

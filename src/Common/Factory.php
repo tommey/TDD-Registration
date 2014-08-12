@@ -2,6 +2,7 @@
 
 namespace Tdd\Common;
 
+use Tdd\Cache\MemcacheCacheStorage;
 use Tdd\Database\SqliteStorage;
 use Tdd\Module\LoginModule;
 use Tdd\Module\RegistrationModule;
@@ -142,4 +143,23 @@ class Factory
     {
         return new FraudModule();
     }
+
+	/**
+	 * @return \Memcache
+	 */
+	public function getLocalMemcache()
+	{
+		$memcache = new \Memcache();
+		$memcache->addServer('localhost', 11211);
+
+		return $memcache;
+	}
+
+	/**
+	 * @return MemcacheCacheStorage
+	 */
+	public function getMemcacheCacheStorage()
+	{
+		return new MemcacheCacheStorage($this->getLocalMemcache());
+	}
 }
