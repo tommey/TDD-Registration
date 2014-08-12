@@ -7,7 +7,7 @@ use Tdd\Common\Factory;
 use Tdd\Common\Key;
 use Tdd\Database\SqliteStorage;
 use Tdd\Module\LoginModule;
-use Tdd\Module\CaptchaModule;
+use Tdd\Module\FraudModule;
 use Tdd\Module\RegistrationModule;
 use Tdd\Repository\UserRepository;
 use Tdd\Utility\PasswordGenerator;
@@ -103,8 +103,8 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 		$this->assertTrue($this->factory->getUserValidator() instanceof UserValidator);
 	}
 
-    public function testFactoryCanGetCaptchaModule()
+    public function testFactoryCanGetFraudModule()
     {
-        $this->assertTrue($this->factory->getCaptchaModule() instanceof CaptchaModule);
+        $this->assertTrue($this->factory->getFraudModule() instanceof FraudModule);
     }
 }

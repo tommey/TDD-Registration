@@ -2,7 +2,7 @@
 
 namespace Tdd\Module;
 
+class FraudModule
+{
 
-class CaptchaModule {
-
-} 
+}

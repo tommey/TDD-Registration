@@ -5,7 +5,7 @@ namespace Tdd\Common;
 use Tdd\Database\SqliteStorage;
 use Tdd\Module\LoginModule;
 use Tdd\Module\RegistrationModule;
-use Tdd\Module\CaptchaModule;
+use Tdd\Module\FraudModule;
 use Tdd\Repository\UserRepository;
 use Tdd\Utility\PasswordGenerator;
 use Tdd\Utility\PasswordHasher;
@@ -136,10 +136,10 @@ class Factory
 	}
 
     /**
-     * @return CaptchaModule
+     * @return FraudModule
      */
-    public function getCaptchaModule()
+    public function getFraudModule()
     {
-        return new CaptchaModule();
+        return new FraudModule();
     }
 }
