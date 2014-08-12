@@ -150,7 +150,7 @@ class Factory
 	public function getLocalMemcache()
 	{
 		$memcache = new \Memcache();
-		$memcache->addServer('localhost', 11211);
+		$memcache->addserver('localhost', 11211);
 
 		return $memcache;
 	}

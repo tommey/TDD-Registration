@@ -6,9 +6,6 @@ addons:
     repo_token: 6ef3a2f4921d74dda426fbce9366e16351c6a3643cb35cd989039c0eb91fdf68
 install:
   - composer install
-before_script:
-  - pecl install memcache
-  - phpenv rehash
 script:
   - phpunit --configuration phpunit.xml
 after_script:
