@@ -141,7 +141,7 @@ class Factory
      */
     public function getFraudModule()
     {
-        return new FraudModule();
+        return new FraudModule($this->getMemcacheCacheStorage());
     }
 
 	/**

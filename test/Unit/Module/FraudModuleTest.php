@@ -2,6 +2,7 @@
 
 namespace Tdd\Test\Unit;
 
+use Tdd\Entity\Attempt;
 use Tdd\Module\FraudModule;
 
 class FraudModuleTest extends \PHPUnit_Framework_TestCase
@@ -11,11 +12,28 @@ class FraudModuleTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->fraudModule = new FraudModule();
+        $storage = $this->getMockBuilder('\\Tdd\\Cache\\CacheStorage')->getMock();
+
+        $this->fraudModule = new FraudModule($storage);
     }
 
-    public function testShow()
+    public function testIpAttemptCounterIncreasedAfterFirstFailedAttempt()
     {
-        $this->assertTrue(true);
+        $attempt = new Attempt('123.123.123', 'Gizi');
+
+        $this->fraudModule->storeFailedAttempt($attempt);
+        $this->assertEquals(1, $this->fraudModule->getIpAttemptCounter($attempt));
+    }
+
+    public function testFraudDetectedAfterThreeFailedAttemptFromTheSameIp()
+    {
+        $attempt = new Attempt('123.123.123', 'Gizi');
+
+        for ($i=0; $i<3; $i++) {
+            $this->fraudModule->storeFailedAttempt($attempt);
+        }
+
+        $this->assertEquals(3, $this->fraudModule->getIpAttemptCounter($attempt));
+        $this->assertTrue($this->fraudModule->isFraudDetected());
     }
 }
