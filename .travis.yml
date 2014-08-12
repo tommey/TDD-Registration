@@ -7,7 +7,8 @@ addons:
 install:
   - composer install
 before_script:
-  - phpenv config-add .travis.php.conf
+  - pecl install memcache
+  - phpenv rehash
 script:
   - phpunit --configuration phpunit.xml
 after_script:
