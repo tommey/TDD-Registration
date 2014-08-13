@@ -7,7 +7,6 @@ addons:
 install:
   - composer install
 script:
-  - php travis-memcache-test.php
   - phpunit --configuration phpunit.xml
 after_script:
   - bash bin/code-climate-test-reporter.sh

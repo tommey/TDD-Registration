@@ -145,12 +145,14 @@ class Factory
     }
 
 	/**
+	 * @codeCoverageIgnore   Because travis-ci's memcache library somehow doesn't have an addServer method.
+	 *
 	 * @return \Memcache
 	 */
 	public function getLocalMemcache()
 	{
 		$memcache = new \Memcache();
-		$memcache->addserver('localhost', 11211);
+		$memcache->addServer('localhost', 11211);
 
 		return $memcache;
 	}

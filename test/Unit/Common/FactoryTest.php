@@ -22,7 +22,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 {
 	/** @var Configuration */
 	private $configuration;
-	/** @var Factory */
+	/** @var Factory|\PHPUnit_Framework_MockObject_MockObject */
 	private $factory;
 
 	private $databaseFile;
@@ -40,7 +40,9 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 		$this->configuration->set(Key::CONFIGURATION_VALIDATOR_USER_PASSWORD_CHARACTER_SET, 'abc');
 		$this->configuration->set(Key::CONFIGURATION_STORAGE_USER_DATABASE_CONFIGURATION, array('file' => $this->databaseFile));
 
-		$this->factory = new Factory($this->configuration);
+		// Mock out the usage of \Memcache from the Factory.
+		$this->factory = $this->getMock('\\Tdd\\Common\\Factory', array('getLocalMemcache'), array($this->configuration));
+		$this->factory->expects($this->any())->method('getLocalMemcache')->willReturn($this->getMock('\\Memcache'));
 	}
 
 	public function tearDown()
@@ -67,11 +69,6 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 	public function testFactoryCanGetLoginModule()
 	{
 		$this->assertTrue($this->factory->getLoginModule() instanceof LoginModule);
-	}
-
-	public function testFactoryCanGetLocalMemcache()
-	{
-		$this->assertTrue($this->factory->getLocalMemcache() instanceof \Memcache);
 	}
 
 	public function testFactoryCanGetMemcacheCacheStorage()
