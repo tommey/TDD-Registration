@@ -19,10 +19,15 @@ class FraudModule
     public function storeFailedAttempt(Attempt $attempt)
     {
 		$ip = $attempt->getIp();
-        $this->ipAttemptCounter[$ip] =
-			isset($this->ipAttemptCounter[$ip])
-            ? ++$this->ipAttemptCounter[$ip]
-            : 1;
+
+		if (isset($this->ipAttemptCounter[$ip]))
+		{
+			$this->ipAttemptCounter[$ip]++;
+		}
+		else
+		{
+			$this->ipAttemptCounter[$ip] = 1;
+		}
     }
 
     public function getIpAttemptCounter(Attempt $attempt)

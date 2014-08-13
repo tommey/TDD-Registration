@@ -49,8 +49,8 @@ class Application
 	{
 		$registrationModule = $this->factory->getRegistrationModule();
 
-		$email    = isset($_POST['email']) ? $_POST['email'] : '';
-		$password = isset($_POST['password']) ? $_POST['password'] : '';
+		$email    = isset($_POST[Key::POST_PARAMETER_USER_EMAIL]) ? $_POST[Key::POST_PARAMETER_USER_EMAIL] : '';
+		$password = isset($_POST[Key::POST_PARAMETER_USER_PASSWORD]) ? $_POST[Key::POST_PARAMETER_USER_PASSWORD] : '';
 
 		if ($registrationModule->registerLocalUser($email, $password))
 		{
@@ -69,7 +69,7 @@ class Application
 	{
 		$registrationModule = $this->factory->getRegistrationModule();
 
-		$email = isset($_POST['email']) ? $_POST['email'] : '';
+		$email = isset($_POST[Key::POST_PARAMETER_USER_EMAIL]) ? $_POST[Key::POST_PARAMETER_USER_EMAIL] : '';
 
 		if ($registrationModule->registerExternalUser($email, $type))
 		{
@@ -85,8 +85,8 @@ class Application
 	{
 		$loginModule = $this->factory->getLoginModule();
 
-		$email    = isset($_POST['email']) ? $_POST['email'] : '';
-		$password = isset($_POST['password']) ? $_POST['password'] : '';
+		$email    = isset($_POST[Key::POST_PARAMETER_USER_EMAIL]) ? $_POST[Key::POST_PARAMETER_USER_EMAIL] : '';
+		$password = isset($_POST[Key::POST_PARAMETER_USER_PASSWORD]) ? $_POST[Key::POST_PARAMETER_USER_PASSWORD] : '';
 
 		$user = $loginModule->loginUser($email, $password);
 

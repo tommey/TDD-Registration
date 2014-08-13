@@ -4,6 +4,7 @@ namespace Tdd\Test\Unit\Common;
 
 use Tdd\Common\Application;
 use Tdd\Common\Factory;
+use Tdd\Common\Key;
 use Tdd\Entity\User;
 
 class ApplicationTest extends \PHPUnit_Framework_TestCase
@@ -12,6 +13,8 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 	private $factory;
 	/** @var Application|\PHPUnit_Framework_MockObject_MockObject */
 	private $application;
+
+	const TEST_PASSWORD = 'password';
 
 	public function setUp()
 	{
@@ -58,16 +61,16 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 	{
 		$registrationModule = $this->getMockBuilder('\\Tdd\\Module\\RegistrationModule')->disableOriginalConstructor()->getMock();
 
-		$_POST['email'] = uniqid('u', true) . '@' . $userType . '.com';
+		$_POST[Key::POST_PARAMETER_USER_EMAIL] = uniqid('u', true) . '@' . $userType . '.com';
 
 		if ($userType == 'local')
 		{
-			$_POST['password'] = 'password';
+			$_POST[Key::POST_PARAMETER_USER_PASSWORD] = self::TEST_PASSWORD;
 
 			$registrationModule
 				->expects($this->once())
 				->method('registerLocalUser')
-				->with($_POST['email'], $_POST['password'])
+				->with($_POST[Key::POST_PARAMETER_USER_EMAIL], $_POST[Key::POST_PARAMETER_USER_PASSWORD])
 				->willReturn($isValidUser);
 		}
 		else
@@ -75,7 +78,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 			$registrationModule
 				->expects($this->once())
 				->method('registerExternalUser')
-				->with($_POST['email'], $userType)
+				->with($_POST[Key::POST_PARAMETER_USER_EMAIL], $userType)
 				->willReturn($isValidUser);
 		}
 
@@ -103,14 +106,14 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 	{
 		$loginModule = $this->getMockBuilder('\\Tdd\\Module\\LoginModule')->disableOriginalConstructor()->getMock();
 
-		$_POST['email']    = uniqid('u', true) . '@' . $userType . '.com';
-		$_POST['password'] = 'password';
+		$_POST[Key::POST_PARAMETER_USER_EMAIL]    = uniqid('u', true) . '@' . $userType . '.com';
+		$_POST[Key::POST_PARAMETER_USER_PASSWORD] = self::TEST_PASSWORD;
 
 		$loginModule
 			->expects($this->once())
 			->method('loginUser')
-			->with($_POST['email'], $_POST['password'])
-			->willReturn($isValidUser ? new User($_POST['email'], $_POST['password'], 'local') : null);
+			->with($_POST[Key::POST_PARAMETER_USER_EMAIL], $_POST[Key::POST_PARAMETER_USER_PASSWORD])
+			->willReturn($isValidUser ? new User($_POST[Key::POST_PARAMETER_USER_EMAIL], $_POST[Key::POST_PARAMETER_USER_PASSWORD], 'local') : null);
 
 		$this->factory
 			->expects($this->once())
