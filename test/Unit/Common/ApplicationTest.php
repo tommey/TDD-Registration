@@ -109,11 +109,25 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase
 		$_POST[Key::POST_PARAMETER_USER_EMAIL]    = uniqid('u', true) . '@' . $userType . '.com';
 		$_POST[Key::POST_PARAMETER_USER_PASSWORD] = self::TEST_PASSWORD;
 
+		if ($isValidUser)
+		{
+			$loginUserReturnValue = new User(
+				$_POST[Key::POST_PARAMETER_USER_EMAIL],
+				$_POST[Key::POST_PARAMETER_USER_PASSWORD],
+				'local'
+			);
+		}
+		else
+		{
+			$loginUserReturnValue = null;
+		}
+
+
 		$loginModule
 			->expects($this->once())
 			->method('loginUser')
 			->with($_POST[Key::POST_PARAMETER_USER_EMAIL], $_POST[Key::POST_PARAMETER_USER_PASSWORD])
-			->willReturn($isValidUser ? new User($_POST[Key::POST_PARAMETER_USER_EMAIL], $_POST[Key::POST_PARAMETER_USER_PASSWORD], 'local') : null);
+			->willReturn($loginUserReturnValue);
 
 		$this->factory
 			->expects($this->once())
