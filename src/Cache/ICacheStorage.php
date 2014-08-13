@@ -2,7 +2,7 @@
 
 namespace Tdd\Cache;
 
-interface CacheStorage
+interface ICacheStorage
 {
 	/**
 	 * @param string $key

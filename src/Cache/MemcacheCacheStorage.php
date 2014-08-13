@@ -2,7 +2,7 @@
 
 namespace Tdd\Cache;
 
-class MemcacheCacheStorage implements CacheStorage
+class MemcacheCacheStorage implements ICacheStorage
 {
 	/** @var \Memcache */
 	private $memcache;

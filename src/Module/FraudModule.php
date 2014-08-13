@@ -2,7 +2,7 @@
 
 namespace Tdd\Module;
 
-use Tdd\Cache\CacheStorage;
+use Tdd\Cache\ICacheStorage;
 use Tdd\Entity\Attempt;
 
 class FraudModule
@@ -11,7 +11,7 @@ class FraudModule
 
     private $ipAttemptCounter;
 
-    public function __construct(CacheStorage $storage)
+    public function __construct(ICacheStorage $storage)
     {
         $this->storage = $storage;
     }
