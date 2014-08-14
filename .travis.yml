@@ -11,3 +11,4 @@ script:
 after_script:
   - bash bin/code-climate-test-reporter.sh
   - php bin/ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
+  - php vendor/bin/coveralls -v
