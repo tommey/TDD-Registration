@@ -6,6 +6,7 @@
 		}
 	},
 	"require-dev": {
-		"codeclimate/php-test-reporter": "dev-master"
+		"codeclimate/php-test-reporter": "dev-master",
+		"satooshi/php-coveralls": "dev-master"
 	}
 }
